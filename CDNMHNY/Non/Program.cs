@@ -26,9 +26,9 @@ namespace Non
             public static string Line;
             public static string ErrorCode;
 
-            public static void Print() { Console.WriteLine("Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com"); }
+            //public static void Print() { Console.WriteLine("Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com"); }
 
-            public static void Write() { File.WriteAllText("log::" + DateTime.Now.ToString("HH:mm:ss"), "Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com"); }
+            //public static void Write() { File.WriteAllText("log::" + DateTime.Now.ToString("HH:mm:ss"), "Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com"); }
         }
 
 
@@ -126,9 +126,12 @@ namespace Non
                              * 
                              * Example:
                              * - Variable text Is Set Mina
-                             * - Variable text Is File text.txt 0
+                             * - Variable textt Is File text.txt 0
                              * - Variable text1 Is Substring %text% %startIndex% %length%
                              * - Variable text2 Is Removed %text% %startIndex% %length%
+                             * - Variable text3 Is InputText
+                             * - Variable text4 Is InputChar
+                             * - Variable text5 Is SInputChar
                              * 
                              * ∎∉ ≠≪≭∰⅍≭∉
                              * 
@@ -144,10 +147,50 @@ namespace Non
                                 else
                                     vars.Add(name, text);
                             }
+                            else if (action == "InputText")
+                            {
+                                string text = Console.ReadLine();
+                                if (vars.ContainsKey(name))
+                                    vars[name] = text;
+                                else
+                                    vars.Add(name, text);
+                            }
+                            else if (action == "InputChar")
+                            {
+                                ConsoleKeyInfo text = Console.ReadKey();
+                                if (vars.ContainsKey(name))
+                                    vars[name] = text.Key.ToString();
+                                else
+                                    vars.Add(name, text.Key.ToString());
+                            }
+                            else if (action == "SInputChar")
+                            {
+                                ConsoleKeyInfo text = Console.ReadKey(true);
+                                if (vars.ContainsKey(name))
+                                    vars[name] = text.Key.ToString();
+                                else
+                                    vars.Add(name, text.Key.ToString());
+                            }
                             else if (action == "File")
                             {
                                 string def = l[i].Remove(0, 9 + name.Length + 4 + action.Length + 1);
-
+                                string[] splitted1 = def.Split(new string[] { " " }, StringSplitOptions.None);
+                                string file = splitted1[0];
+                                int line = 0;
+                                try
+                                {
+                                    line = int.Parse(splitted1[1]);
+                                    string[] filecontent = File.ReadAllLines(file);
+                                    if(line <= filecontent.Length)
+                                    {
+                                        string text = filecontent[line];
+                                        if (vars.ContainsKey(name))
+                                            vars[name] = text;
+                                        else
+                                            vars.Add(name, text);
+                                    }
+                                }
+                                catch (Exception ex) { throw ex; }
                             }
                         }
                         else if (splitted[0] == "PrintText")
@@ -239,21 +282,19 @@ namespace Non
                                     }
                                 }
                             }
-                            try { char c = char.Parse(text);  Console.Write(text); }
-                            catch
-                            {
-
-                            }
+                            try { char c = char.Parse(text); Console.Write(c.ToString()); }
+                            catch (Exception ex) { if (text.Length - 1 >= 1 && text.StartsWith("\\")) { throw new FormatException("Special characters like \"\\n\" are not supported."); } else { throw ex; } }
                         }
                         else if (splitted[0] == "Comment") { }
+                        else if (splitted[0] == "Pause") { Console.ReadKey(true); }
                         else { throw new InvalidDataException("Unkown command"); }
                     }
                     catch (Exception e)
                     {
                         if (vars["showerrors"] == "true")
-                            Console.WriteLine("Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com");
+                            Console.WriteLine("\nLine::" + i + "\nMessage::" + e.Message + "\nHashcode::" + e.GetHashCode().ToString() + "\nOur Email::mineloced@gmail.com");
                         if (vars["writeerrors"] == "true")
-                            File.WriteAllText("log::" + DateTime.Now.ToString("HH:mm:ss"), "Line::" + i + "\nMessage::" + e.Message + "\nSource::" + e.Source + "\nHelpLink::" + e.HelpLink + "\nOur Email::mineloced@gmail.com");
+                            File.WriteAllText("log::" + DateTime.Now.ToString("HH:mm:ss"), "\nLine::" + i + "\nMessage::" + e.Message + "\nHashcode::" + e.GetHashCode().ToString() + "\nOur Email::mineloced@gmail.com");
                     }
                 }
             }

@@ -1,0 +1,6 @@
+PrintChar H
+PrintTextLine ello, World
+Variable nar Is InputChar
+PrintTextLine 
+PrintChar %nar%
+Pause

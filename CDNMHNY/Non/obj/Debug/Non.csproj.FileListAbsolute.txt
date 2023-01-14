@@ -1,0 +1,7 @@
+C:\Users\inniesharp\source\repos\Non\Non\obj\Debug\Non.csprojAssemblyReference.cache
+C:\Users\inniesharp\source\repos\Non\Non\obj\Debug\Non.csproj.CoreCompileInputs.cache
+C:\Users\inniesharp\source\repos\Non\Non\bin\Debug\Non.exe.config
+C:\Users\inniesharp\source\repos\Non\Non\bin\Debug\Non.exe
+C:\Users\inniesharp\source\repos\Non\Non\bin\Debug\Non.pdb
+C:\Users\inniesharp\source\repos\Non\Non\obj\Debug\Non.exe
+C:\Users\inniesharp\source\repos\Non\Non\obj\Debug\Non.pdb
